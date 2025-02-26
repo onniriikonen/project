@@ -7,16 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm run dev --prefix client",
     "server": "npm start --prefix server",
-    "install": "cd client && npm install",
-    "dev:client": "cd client && npm run dev"
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5"
+    "@mui/material-next": "^6.0.0-alpha.126",
+    "cors": "^2.8.5",
+    "react-beautiful-dnd": "^13.1.1"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17"
+    "@types/cors": "^2.8.17",
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "concurrently": "^9.1.2"
   }
 }
