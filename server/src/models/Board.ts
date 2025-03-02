@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose"
 
+// Card inside a columd
 interface ICard {
   title: string
   description?: string
@@ -8,12 +9,16 @@ interface ICard {
   _id: mongoose.Types.ObjectId
 }
 
+
+// Column inside a board
 interface IColumn {
   title: string
   position: number
   cards: ICard[]
 }
 
+
+// Board document in MongoDB
 interface IBoard extends Document {
   userId: string
   title: string

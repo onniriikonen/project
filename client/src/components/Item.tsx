@@ -1,5 +1,7 @@
 import { Card, CardContent, Typography, Button, Box } from "@mui/material"
 
+
+// Structure of item props
 interface ItemProps {
     boardId: string
     columnIndex: number
@@ -12,6 +14,8 @@ interface ItemProps {
 }
 
 const Item = ({ boardId, columnIndex, cardId, title, description, fetchBoard }: ItemProps) => {
+
+    // Function to move the card up or down within the column
     const moveCard = async (direction: "up" | "down") => {
         const token = localStorage.getItem("token")
         if (!token) return
@@ -26,6 +30,8 @@ const Item = ({ boardId, columnIndex, cardId, title, description, fetchBoard }: 
         if (response.ok) fetchBoard()
     }
 
+
+    // Function to delete a card
     const deleteCard = async () => {
         const token = localStorage.getItem("token")
         if (!token) return
@@ -42,8 +48,12 @@ const Item = ({ boardId, columnIndex, cardId, title, description, fetchBoard }: 
     return (
         <Card sx={{ marginBottom: 1, padding: 1, backgroundColor: "white" }}>
             <CardContent>
+
+                {/* Display card content */}
                 <Typography variant="h6">{title}</Typography>
                 {description && <Typography variant="body2">{description}</Typography>}
+
+                {/* Buttons for moving the card up or down */}
                 <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
                     <Button variant="outlined" size="small" onClick={() => moveCard("up")}>⬆️</Button>
                     <Button variant="outlined" size="small" onClick={() => moveCard("down")}>⬇️</Button>

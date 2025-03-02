@@ -8,6 +8,7 @@ const Board_1 = __importDefault(require("../models/Board"));
 const validateToken_1 = require("../middleware/validateToken");
 const mongoose_1 = __importDefault(require("mongoose"));
 const router = (0, express_1.Router)();
+// Create a new board
 router.post('/', validateToken_1.validateToken, async (req, res) => {
     try {
         const newBoard = new Board_1.default({
@@ -22,6 +23,7 @@ router.post('/', validateToken_1.validateToken, async (req, res) => {
         res.status(500).json({ message: 'Error creating board' });
     }
 });
+// Fetch all boards belonging to the authenticated user
 router.get('/', validateToken_1.validateToken, async (req, res) => {
     try {
         const boards = await Board_1.default.find({ userId: req.user?._id });
@@ -31,6 +33,7 @@ router.get('/', validateToken_1.validateToken, async (req, res) => {
         res.status(500).json({ message: 'Error fetching boards' });
     }
 });
+// Fetch a specific board
 router.get('/:boardId', validateToken_1.validateToken, async (req, res) => {
     try {
         if (!req.user)
@@ -44,6 +47,7 @@ router.get('/:boardId', validateToken_1.validateToken, async (req, res) => {
         res.status(500).json({ message: 'Error fetching board' });
     }
 });
+// Delete a board
 router.delete('/:boardId', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOneAndDelete({ _id: req.params.boardId, userId: req.user?._id });
@@ -57,6 +61,7 @@ router.delete('/:boardId', validateToken_1.validateToken, async (req, res) => {
         res.status(500).json({ message: 'Error deleting board' });
     }
 });
+// Add a column to a board
 router.post('/:boardId/columns', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOne({ _id: req.params.boardId, userId: req.user?._id });
@@ -72,6 +77,7 @@ router.post('/:boardId/columns', validateToken_1.validateToken, async (req, res)
         res.status(500).json({ message: 'Error adding column' });
     }
 });
+// Rename a column
 router.put('/:boardId/columns/:columnIndex', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOne({ _id: req.params.boardId, userId: req.user?._id });
@@ -92,6 +98,7 @@ router.put('/:boardId/columns/:columnIndex', validateToken_1.validateToken, asyn
         res.status(500).json({ message: 'Error renaming column' });
     }
 });
+// Delete a column from a board
 router.delete('/:boardId/columns/:columnIndex', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOne({ _id: req.params.boardId, userId: req.user?._id });
@@ -112,6 +119,7 @@ router.delete('/:boardId/columns/:columnIndex', validateToken_1.validateToken, a
         res.status(500).json({ message: 'Error deleting column' });
     }
 });
+// Add a card to a column
 router.post('/:boardId/columns/:columnIndex/cards', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOne({ _id: req.params.boardId, userId: req.user?._id });
@@ -125,13 +133,13 @@ router.post('/:boardId/columns/:columnIndex/cards', validateToken_1.validateToke
             return;
         }
         const newCard = {
-            _id: new mongoose_1.default.Types.ObjectId(), // ✅ Ensure each new card gets a unique ID
+            _id: new mongoose_1.default.Types.ObjectId(),
             title: req.body.title,
             description: req.body.description || '',
             position: board.columns[columnIndex].cards.length,
             createdAt: new Date(),
         };
-        board.columns[columnIndex].cards.push(newCard); // ✅ Add card to the column
+        board.columns[columnIndex].cards.push(newCard);
         await board.save();
         res.status(201).json(board);
     }
@@ -139,6 +147,7 @@ router.post('/:boardId/columns/:columnIndex/cards', validateToken_1.validateToke
         res.status(500).json({ message: 'Error adding card' });
     }
 });
+// Delete a card
 router.delete('/:boardId/columns/:columnIndex/cards/:cardId', validateToken_1.validateToken, async (req, res) => {
     try {
         const board = await Board_1.default.findOne({ _id: req.params.boardId, userId: req.user?._id });
@@ -157,7 +166,7 @@ router.delete('/:boardId/columns/:columnIndex/cards/:cardId', validateToken_1.va
             res.status(404).json({ message: 'Card not found' });
             return;
         }
-        column.cards.splice(cardIndex, 1); // ✅ Remove card
+        column.cards.splice(cardIndex, 1);
         await board.save();
         res.status(200).json(board);
     }
@@ -165,6 +174,7 @@ router.delete('/:boardId/columns/:columnIndex/cards/:cardId', validateToken_1.va
         res.status(500).json({ message: 'Error deleting card' });
     }
 });
+// Move a card inside a column
 router.put('/:boardId/columns/:columnIndex/cards/:cardId/move', validateToken_1.validateToken, async (req, res) => {
     try {
         const { direction } = req.body;
@@ -185,7 +195,6 @@ router.put('/:boardId/columns/:columnIndex/cards/:cardId/move', validateToken_1.
             return;
         }
         if (direction === "up" && cardIndex > 0) {
-            // Swap positions
             [column.cards[cardIndex], column.cards[cardIndex - 1]] = [column.cards[cardIndex - 1], column.cards[cardIndex]];
         }
         else if (direction === "down" && cardIndex < column.cards.length - 1) {

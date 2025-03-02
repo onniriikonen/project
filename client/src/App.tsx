@@ -26,10 +26,16 @@ function App() {
         <div className="App">
           <Navbar />
           <Routes>
+
+            {/* Public routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
+            {/* Protected routes */}
             <Route path="/boards" element={isAuthenticated ? <Boards /> : <Navigate to="/login" />} />
             <Route path="/" element={<Navigate to={isAuthenticated ? "/boards" : "/login"} />} />
+
+            {/* Default route */}
             <Route path="/boards/:boardId" element={isAuthenticated ? <Board /> : <Navigate to="/login" />} />
           </Routes>
         </div>

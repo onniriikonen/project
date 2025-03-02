@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Card, CardContent, Typography, Button, Box, TextField } from "@mui/material"
 import useFetch from "./useFetch"
 
+// Board structure
 interface Board {
     _id: string
     title: string
@@ -14,6 +15,7 @@ const Board = () => {
 
     const { data: boards, loading, error, refetch } = useFetch<Board[]>("http://localhost:8000/boards")
 
+    // Function to create board
     const createBoard = async () => {
         if (!newBoardTitle.trim()) return
         const token = localStorage.getItem("token")
@@ -31,6 +33,7 @@ const Board = () => {
         }
     }
 
+    // Function to delete a board    
     const deleteBoard = async (boardId: string) => {
         const token = localStorage.getItem("token")
         const response = await fetch(`http://localhost:8000/boards/${boardId}`, {
@@ -60,6 +63,7 @@ const Board = () => {
       >
           <Typography variant="h4">Your Boards</Typography>
 
+        {/* Input field and button to create a new board */}
           <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 2, maxWidth: "80%" }}>
               <TextField 
                   label="Board Title" 
@@ -70,6 +74,8 @@ const Board = () => {
               />
               <Button variant="contained" onClick={createBoard}>Add Board</Button>
           </Box>
+          
+          {/* Display list of boards */}
           <Box
               sx={{
                   display: "flex",

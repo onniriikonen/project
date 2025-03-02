@@ -9,6 +9,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const router = (0, express_1.Router)();
+// Register a user
 router.post("/register", (0, express_validator_1.body)("email").isEmail().withMessage("Invalid email format"), (0, express_validator_1.body)("password").isLength({ min: 3 }).withMessage("Password must be at least 3 characters long"), (0, express_validator_1.body)("username").notEmpty().withMessage("Username is required"), async (req, res) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
@@ -39,6 +40,7 @@ router.post("/register", (0, express_validator_1.body)("email").isEmail().withMe
         return;
     }
 });
+// Login
 router.post("/login", (0, express_validator_1.body)("email").isEmail(), (0, express_validator_1.body)("password").exists(), async (req, res) => {
     try {
         const { email, password } = req.body;

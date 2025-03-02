@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography"
 import { Box, TextField } from '@mui/material'
 import { useState } from 'react'
 
+
+// Function to handle registration
 const fetchData = async (username: string, password: string, email: string) => {
     try {
         const response = await fetch("http://localhost:8000/user/register",{
@@ -56,6 +58,7 @@ const Register = () => {
                 paddingTop: "70px"
             }}
         >
+            {/* Registration form card */}
             <Card variant="outlined" sx={{ padding: 3, minWidth: 300 }}>
                 <CardContent>
                 <Typography variant="h4">Register</Typography>

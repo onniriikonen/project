@@ -7,6 +7,7 @@ exports.validateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+// Middleware to validate JWT token
 const validateToken = (req, res, next) => {
     const token = req.header('authorization')?.split(" ")[1];
     if (!token) {

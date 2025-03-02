@@ -6,7 +6,7 @@ import { User, IUser } from '../models/User'
 
 const router: Router = Router();
 
-
+// Register a user
 router.post("/register",
     body("email").isEmail().withMessage("Invalid email format"),
     body("password").isLength({min: 3}).withMessage("Password must be at least 3 characters long"),
@@ -49,7 +49,7 @@ router.post("/register",
     }
 )
 
-
+// Login
 router.post("/login",
     body("email").isEmail(),
     body("password").exists(),

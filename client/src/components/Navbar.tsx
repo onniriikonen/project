@@ -1,6 +1,7 @@
-import { IconButton, Button, Toolbar, Box, AppBar, Typography }  from '@mui/material'
+import { Button, Toolbar, Box, AppBar, Typography }  from '@mui/material'
 import { Link } from 'react-router-dom'
 
+// Function to handle logout
 const logout = () => {
     localStorage.removeItem("token")
     window.dispatchEvent(new Event("storage"))
@@ -17,20 +18,16 @@ const Navbar = () => {
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                         Board App
                     </Typography>
-                        <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        >
-                        </IconButton>
+                        {/* Conditional rendering based on authentication status */}
                         {!token ? (
                             <>
+                                {/* Show login and register buttons if user is not authenticated */}
                                 <Button component={Link} to="/login" color="inherit">Login</Button>
                                 <Button component={Link} to="/register" color="inherit">Register</Button>
                             </>
                         ) : (     
+
+                            /* Show logout button if user is authenticated */
                             <Button onClick={logout} color="inherit">Logout</Button>
                         )}
                         

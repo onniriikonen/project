@@ -4,10 +4,14 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
+
+// Extend Express Request interface to include user property
 export interface CustomRequest extends Request {
     user?: JwtPayload
 }
 
+
+// Middleware to validate JWT token
 export const validateToken = (req: CustomRequest, res: Response, next: NextFunction): void => {
 
     const token: string | undefined = req.header('authorization')?.split(" ")[1]

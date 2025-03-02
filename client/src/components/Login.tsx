@@ -1,6 +1,7 @@
 import { Typography, Box, Button, TextField, Card, CardContent } from "@mui/material"
 import { useState } from "react"
 
+// Funtion to handle user login
 const fetchData = async (email: string, password: string) => {
     try {
         const response = await fetch("http://localhost:8000/user/login",{
@@ -50,6 +51,7 @@ const Login = () => {
                 paddingTop: "70px"
             }}
         >
+            {/* Login form */}
             <Card variant="outlined"sx={{ padding: 3, minWidth: 300 }}>
                 <CardContent>
                     <Typography variant="h4">Login</Typography>
@@ -67,7 +69,7 @@ const Login = () => {
                         <TextField
                         required
                         id="outlined-required"
-                        label="Username"
+                        label="Email"
                         defaultValue=""
                         onChange={(e) => setEmail(e.target.value)}
                         />

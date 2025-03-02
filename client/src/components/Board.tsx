@@ -4,6 +4,8 @@ import { Typography, Box, Button, TextField, Grid2 } from "@mui/material"
 import useFetch from "./useFetch"
 import Column from "./Column"
 
+
+// Defining board structure
 interface Board {
     _id: string
     title: string
@@ -29,6 +31,7 @@ const BoardPage = () => {
         `http://localhost:8000/boards/${boardId}`
     )
 
+    // Function to add a new column    
     const addColumn = async () => {
         if (!newColumnTitle.trim()) return
 
@@ -57,6 +60,7 @@ const BoardPage = () => {
     return (
         <Box sx={{ textAlign: "center" }}>
             <Typography variant="h4">{board.title}</Typography>
+            {/* Add a new column */}
             <Box sx={{ 
                     display: "flex", 
                     flexDirection: "column", 
@@ -73,7 +77,7 @@ const BoardPage = () => {
             <Button variant="contained" onClick={addColumn}>Add Column</Button>
 
             </Box>
-
+            {/* Display columns */}    
             <Grid2 container spacing={2} component={"div"}
                 sx={{
                     justifyContent: "center",

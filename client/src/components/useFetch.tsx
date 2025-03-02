@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 
+// Custom hook for fetching data with authentication
 const useFetch = <T,>(url: string) => {
     const [data, setData] = useState<T | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
   
+    // Function to fetch data
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token")
@@ -33,8 +35,9 @@ const useFetch = <T,>(url: string) => {
       } finally {
         setLoading(false)
       }
-    };
-  
+    }
+
+    // Fetch data when the component mounts or when the URL changes
     useEffect(() => {
       fetchData()
     }, [url])
