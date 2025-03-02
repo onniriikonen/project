@@ -33,6 +33,7 @@ function App() {
 
             {/* Protected routes */}
             <Route path="/boards" element={isAuthenticated ? <Boards /> : <Navigate to="/login" />} />
+            <Route path="/board" element={isAuthenticated ? <Board /> : <Navigate to="/login" />} />
             <Route path="/" element={<Navigate to={isAuthenticated ? "/boards" : "/login"} />} />
 
             {/* Default route */}
